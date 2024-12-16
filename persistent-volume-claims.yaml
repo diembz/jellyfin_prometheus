@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jellyfin-config-pvc    # Nombre del PVC para configuración
+  namespace: jellyfin          # Namespace donde se creará el PVC
+spec:
+  storageClassName: ""         # Indica que no se usará una StorageClass dinámica
+  volumeName: jellyfin-config-pv  # Nombre exacto del PV al que se vincula este PVC
+  accessModes:
+    - ReadWriteOnce            # Debe coincidir con el PV
+  volumeMode: Filesystem       # Tipo de almacenamiento, generalmente "Filesystem"
+  resources:
+    requests:
+      storage: 5Gi             # Debe ser menor o igual al tamaño del PV
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jellyfin-cache-pvc     # Nombre del PVC para caché
+  namespace: jellyfin          # Namespace donde se creará el PVC
+spec:
+  storageClassName: ""         # No se usará una StorageClass dinámica
+  volumeName: jellyfin-cache-pv  # Nombre exacto del PV al que se vincula este PVC
+  accessModes:
+    - ReadWriteOnce            # Debe coincidir con el PV
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Gi            # Debe ser menor o igual al tamaño del PV
