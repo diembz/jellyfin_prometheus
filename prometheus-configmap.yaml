@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-server-conf
+  namespace: monitoring
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 10s
+
+    scrape_configs:
+      # Scrape Kubernetes metrics
+      - job_name: "kubernetes"
+        kubernetes_sd_configs:
+          - role: node
+
+      # Scrape Jellyfin metrics
+      - job_name: "jellyfin-service"
+        static_configs:
+          - targets: ["jellyfin-service.jellyfin.svc.cluster.local:8096"]
